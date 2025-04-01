@@ -3,16 +3,16 @@ import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-d
 import './App.css';
 import Navbar from './components/navbar/navbar';
 import Home from './components/Home/Home';
-import Hero from './components/hero/hero';  // Import the Hero component
-import CardGrid from './components/Card grid/CardGrid';  // Import CardGrid correctly
+import Hero from './components/hero/hero';
+// import CardGrid from './components/Card grid/CardGrid';
 import Dashboard from './components/Dashboard/Dashboard';
 import Login from './components/Login/login';
-import Footer from './components/Footer/footer';  // Import Footer
+import Footer from './components/Footer/footer';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { auth } from './components/firebase/config';
 import Loader from './components/Loader/Loader';
 import PaymentPage from './components/Payment Page/PaymentPage';
-import { CartProvider } from './Contexts/CartContext'; // Import Cart Provider
+import { CartProvider } from './Contexts/CartContext';
 
 function ProtectedRoute({ children, isAdmin, user }) {
   if (!user) {
@@ -27,14 +27,14 @@ function ProtectedRoute({ children, isAdmin, user }) {
 }
 
 function App() {
-  const [user, loading] = useAuthState(auth); 
+  const [user, loading] = useAuthState(auth);
   const [isAdmin, setIsAdmin] = useState(false);
   const [checking, setChecking] = useState(true);
 
   useEffect(() => {
     const verifyAdmin = () => {
       if (user) {
-        setIsAdmin(user.email && user.email.toLowerCase() === 'admin@gmail.com'); // Adjust admin email as necessary
+        setIsAdmin(user.email && user.email.toLowerCase() === 'admin@gmail.com');
       } else {
         setIsAdmin(false);
       }
@@ -44,7 +44,7 @@ function App() {
     if (!loading) verifyAdmin();
   }, [user, loading]);
 
-  if (checking || loading) 
+  if (checking || loading)
     return (
       <div className="min-h-screen flex items-center justify-center">
         <Loader />
@@ -52,7 +52,7 @@ function App() {
     );
 
   return (
-    <CartProvider> {/* Wrap your application with CartProvider */}
+    <CartProvider>
       <Router>
         <div className="App">
           <Navbar />
@@ -61,9 +61,9 @@ function App() {
               path="/"
               element={
                 <>
-                  <Hero /> {/* Hero section */}
-                  <Home /> {/* Home component below the hero */}
-                  {/* <CardGrid />  */}
+                  <Hero />
+                  {/* <CardGrid /> */}
+                  <Home />
                 </>
               }
             />
@@ -80,7 +80,7 @@ function App() {
               }
             />
           </Routes>
-          <Footer /> {/* Footer at the bottom */}
+          <Footer />
         </div>
       </Router>
     </CartProvider>
